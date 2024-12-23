@@ -1,17 +1,18 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CryptoJS from "crypto-js";
 
 export default function AES() {
   const [secretKey, setSecretKey] = useState("");
-  const encryptedText = "jDesTyR/qja67J9dBOLde2pkVacWPyBzv4YK7q4kbpWpbckpG9dNpslqvh5Fy9XZRTO/QTAecqhYtjPb7UokoFFW1fHHb/4bWo1SqVhNffo="
+  const encryptedText = "U2FsdGVkX1/YRQSupR6GpXNoOBD7CdBRPE94Dj1txV4RG5o+8GItKWUrFu1GMt/uXMFrRNU3vzymkCCGFIFEqexWWFIbVq18CzF7YYrrJRdIlHbOX4DWGaLBtOvJNBl5"
   const [decryptedText, setDecryptedText] = useState("");
   const [popperMessage, setPopperMessage] = useState<string | null>(null);
+
 
   // Decrypt the text and display popper
   const decryptText = (encryptedText: string, key: string) => {
     try {
-      const bytes = CryptoJS.AES.decrypt(encryptedText, key);
+      const bytes = CryptoJS.AES.decrypt(encryptedText, key.toLowerCase());
       const decrypted = bytes.toString(CryptoJS.enc.Utf8);
 
       if (decrypted) {
@@ -68,6 +69,10 @@ export default function AES() {
           />
         </div>
       )}
+
+      {decryptedText && <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Polygon_blockchain_logo.png"/>}
+
+      {decryptedText && <h2>Congratulations!</h2>}
 
       {popperMessage && <div className="popper">{popperMessage}</div>}
 
