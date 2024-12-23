@@ -8,8 +8,6 @@ export default function AES() {
   const [decryptedText, setDecryptedText] = useState("");
   const [popperMessage, setPopperMessage] = useState<string | null>(null);
 
-
-  // Decrypt the text and display popper
   const decryptText = (encryptedText: string, key: string) => {
     try {
       const bytes = CryptoJS.AES.decrypt(encryptedText, key.toLowerCase());
@@ -26,7 +24,6 @@ export default function AES() {
       setPopperMessage("❌ Incorrect secret key. Please try again.");
     }
 
-    // Hide the popper after 3 seconds
     setTimeout(() => setPopperMessage(null), 3000);
   };
 
@@ -52,7 +49,7 @@ export default function AES() {
           onClick={() => decryptText(encryptedText, secretKey)}
           className="decrypt-button"
         >
-          Decrypt
+          Get Tokens
         </button>
       </div>
 
