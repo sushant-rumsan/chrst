@@ -1,12 +1,24 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CryptoJS from "crypto-js";
+import FunAnimation from "./components/animation";
 
 export default function AES() {
   const [secretKey, setSecretKey] = useState("");
-  const encryptedText = "U2FsdGVkX1/YRQSupR6GpXNoOBD7CdBRPE94Dj1txV4RG5o+8GItKWUrFu1GMt/uXMFrRNU3vzymkCCGFIFEqexWWFIbVq18CzF7YYrrJRdIlHbOX4DWGaLBtOvJNBl5"
+  const encryptedText =
+    "U2FsdGVkX1/YRQSupR6GpXNoOBD7CdBRPE94Dj1txV4RG5o+8GItKWUrFu1GMt/uXMFrRNU3vzymkCCGFIFEqexWWFIbVq18CzF7YYrrJRdIlHbOX4DWGaLBtOvJNBl5";
   const [decryptedText, setDecryptedText] = useState("");
   const [popperMessage, setPopperMessage] = useState<string | null>(null);
+  const [pk, setPk] = useState(false);
+
+  useEffect(() => {
+    if (decryptedText) {
+      const timer = setTimeout(() => {
+        setPk(true);
+      }, 3000);
+      return () => clearTimeout(timer); // Cleanup timeout to avoid memory leaks
+    }
+  }, [decryptedText]);
 
   const decryptText = (encryptedText: string, key: string) => {
     try {
@@ -27,165 +39,67 @@ export default function AES() {
     setTimeout(() => setPopperMessage(null), 3000);
   };
 
-  return (
-    <div className="container">
-      <h1 className="title">🎄 Claim Your Tokens, Manjik 🎅</h1>
 
-      <div className="form-group">
-        <label htmlFor="secret-key" className="label">
-          Enter Secret Code
+
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-pink-500 to-pink-200 px-8 py-10 rounded-lg shadow-lg">
+     
+      {!decryptedText && 
+      <>
+      <h1 className="flex flex-col md:flex-row gap-2 text-4xl font-bold text-white mb-6 text-center">
+       <span> ✨</span>  Claim Your Tokens, Manjik  <span>🎅</span>
+      </h1>
+      <div className="w-full max-w-md">
+        <label
+          htmlFor="secret-key"
+          className="block text-sm font-semibold text-white mb-2"
+        >
+          Enter Your Magical Key
         </label>
         <textarea
           id="secret-key"
-          className="input"
-          placeholder="Enter your secret key here"
+          className="w-full p-3 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-400"
+          placeholder="Type your secret code here"
           value={secretKey}
           onChange={(e) => setSecretKey(e.target.value)}
         />
       </div>
 
-      <div className="buttons">
-        <button
-          onClick={() => decryptText(encryptedText, secretKey)}
-          className="decrypt-button"
-        >
-          Get Tokens
-        </button>
-      </div>
+      <button
+        onClick={() => decryptText(encryptedText, secretKey)}
+        className="mt-6 bg-gradient-to-r from-orange-400 to-red-400 text-white text-lg font-medium py-3 px-6 rounded-full transform hover:scale-105 transition duration-300"
+      >
+        Reveal the Treasure 🎁
+      </button>
+      </>
+      }
 
-      {decryptedText && (
-        <div className="output">
-          <label htmlFor="decrypted-text" className="label">
-            Decrypted Text
-          </label>
+      {pk && (
+        <div className="mt-8 w-full max-w-md text-center">
           <input
             id="decrypted-text"
-            className="input"
-            value={decryptedText}
+            className="w-full p-3 border rounded-md text-gray-700 bg-white"
+            value={`0x${decryptedText}`}
             readOnly
           />
+          <img
+            className="w-20 mx-auto mt-4"
+            src="https://upload.wikimedia.org/wikipedia/commons/2/24/Polygon_blockchain_logo.png"
+            alt="Success"
+          />
+          <h2 className="mt-4 text-3xl font-bold text-white flex flex-col md:flex-row gap-2">
+            <span>🎉 🎉 🎉</span> Congratulations, You Did It! <span> 🎉 🎉  🎉 </span>
+          </h2>
         </div>
       )}
 
-      {decryptedText && <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Polygon_blockchain_logo.png"/>}
+      {popperMessage && !decryptedText && (
+        <div className="mt-6 px-4 py-2 bg-black text-white rounded-lg text-center text-lg animate-bounce">
+          {popperMessage}
+        </div>
+      )}
 
-      {decryptedText && <h2>Congratulations!</h2>}
-
-      {popperMessage && <div className="popper">{popperMessage}</div>}
-
-      <style jsx>{`
-        .container {
-          max-width: 600px;
-          margin: auto;
-          padding: 40px;
-          text-align: center;
-          background-color: #f0f8ff;
-          border-radius: 15px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-          font-family: "Arial", sans-serif;
-        }
-
-        .title {
-          font-size: 2.5rem;
-          color: #0070f3;
-          margin-bottom: 20px;
-          font-weight: bold;
-        }
-
-        .form-group {
-          margin-bottom: 20px;
-        }
-
-        .label {
-          font-size: 1.2rem;
-          color: #d32f2f;
-          margin-bottom: 10px;
-          display: block;
-        }
-
-        .input {
-          width: 100%;
-          padding: 12px;
-          border-radius: 8px;
-          border: 1px solid #ccc;
-          background-color: #fff;
-          font-size: 1.1rem;
-          color: #333;
-          box-sizing: border-box;
-        }
-
-        .input:focus {
-          outline: none;
-          border-color: #0070f3;
-          box-shadow: 0 0 10px rgba(0, 112, 243, 0.2);
-        }
-
-        .buttons {
-          margin-top: 20px;
-        }
-
-        .decrypt-button {
-          padding: 12px 24px;
-          margin-top: 15px;
-          border-radius: 8px;
-          border: 1px solid #28a745;
-          background-color: #28a745;
-          color: white;
-          font-size: 1.2rem;
-          cursor: pointer;
-          transition: background-color 0.3s ease;
-        }
-
-        .decrypt-button:hover {
-          background-color: #218838;
-        }
-
-        .output {
-          margin-top: 20px;
-        }
-
-        .output input {
-          width: 100%;
-          height: 40px;
-          padding: 10px;
-          margin-top: 10px;
-          border-radius: 8px;
-          border: 1px solid #ccc;
-          background-color: #fff;
-          font-size: 1.1rem;
-          color: #333;
-          box-sizing: border-box;
-        }
-
-        .popper {
-          margin-top: 20px;
-          padding: 10px 20px;
-          background-color: rgba(0, 0, 0, 0.8);
-          color: white;
-          font-size: 1rem;
-          border-radius: 5px;
-          animation: fadeInOut 3s forwards;
-        }
-
-        @keyframes fadeInOut {
-          0% {
-            opacity: 0;
-            transform: translateY(-10px);
-          }
-          10% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-          90% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-          100% {
-            opacity: 0;
-            transform: translateY(-10px);
-          }
-        }
-      `}</style>
+{decryptedText && !pk && <FunAnimation /> }
     </div>
   );
 }
