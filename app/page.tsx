@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CryptoJS from "crypto-js";
 
 export default function AES() {
