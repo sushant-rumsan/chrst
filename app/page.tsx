@@ -16,7 +16,7 @@ export default function AES() {
       const timer = setTimeout(() => {
         setPk(true);
       }, 3000);
-      return () => clearTimeout(timer); // Cleanup timeout to avoid memory leaks
+      return () => clearTimeout(timer);
     }
   }, [decryptedText]);
 
@@ -76,6 +76,9 @@ export default function AES() {
 
       {pk && (
         <div className="mt-8 w-full max-w-md text-center">
+          <div className="flex flex-col text-3xl font-bold text-white gap-4 mb-4"><span>🎅 🎅 🎅 🎅 🎅 🎅</span>
+            <span>🎉 🎉 🎉 🎉 🎉  🎉 </span>
+            </div>
           <input
             id="decrypted-text"
             className="w-full p-3 border rounded-md text-gray-700 bg-white"
@@ -87,11 +90,16 @@ export default function AES() {
             src="https://upload.wikimedia.org/wikipedia/commons/2/24/Polygon_blockchain_logo.png"
             alt="Success"
           />
-          <h2 className="mt-4 text-3xl font-bold text-white flex flex-col md:flex-row gap-2">
-            <span>🎉 🎉 🎉</span> Congratulations, You Did It! <span> 🎉 🎉  🎉 </span>
+          <h2 className="mt-4 text-3xl font-bold text-white flex flex-col gap-4">
+          <img src="https://gifdb.com/images/thumbnail/congratulations-funny-clapping-rishi-dhamala-svbnofspomit4njv.gif" alt="" />
+          
+            <span>🎉 🎉 🎉 🎉 🎉  🎉 </span>
+            <span>🎄 🎄 🎄 🎄 🎄 🎄</span>
           </h2>
         </div>
       )}
+
+      
 
       {popperMessage && !decryptedText && (
         <div className="mt-6 px-4 py-2 bg-black text-white rounded-lg text-center text-lg animate-bounce">
