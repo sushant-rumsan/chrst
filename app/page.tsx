@@ -5,8 +5,8 @@ import FunAnimation from "./components/animation";
 
 export default function AES() {
   const [secretKey, setSecretKey] = useState("");
-  const encryptedText =
-    "U2FsdGVkX1/YRQSupR6GpXNoOBD7CdBRPE94Dj1txV4RG5o+8GItKWUrFu1GMt/uXMFrRNU3vzymkCCGFIFEqexWWFIbVq18CzF7YYrrJRdIlHbOX4DWGaLBtOvJNBl5";
+  const encryptedText = "";
+    // "U2FsdGVkX1/YRQSupR6GpXNoOBD7CdBRPE94Dj1txV4RG5o+8GItKWUrFu1GMt/uXMFrRNU3vzymkCCGFIFEqexWWFIbVq18CzF7YYrrJRdIlHbOX4DWGaLBtOvJNBl5";
   const [decryptedText, setDecryptedText] = useState("");
   const [popperMessage, setPopperMessage] = useState<string | null>(null);
   const [pk, setPk] = useState(false);
@@ -61,6 +61,7 @@ export default function AES() {
           className="w-full p-3 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-400"
           placeholder="Type your secret code here"
           value={secretKey}
+          disabled
           onChange={(e) => setSecretKey(e.target.value)}
         />
       </div>
